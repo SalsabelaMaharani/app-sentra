@@ -1,0 +1,12 @@
+FROM python:3.11-slim AS builder
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir --target=/app/deps -r requirements.txt
+FROM python:3.11-slim
+WORKDIR /app
+RUN useradd -u 999 sentra && chown -R sentra:sentra /app
+USER sentra
+COPY --from=builder /app/deps /usr/local/lib/python3.11/site-packages
+COPY src/ ./src/
+EXPOSE 5000
+CMD ["flask", "--app", "src/app.py", "run", "--host=0.0.0.0"]
