@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
  
-APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"  
+APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck disable=SC1091
 source "$APP_DIR/lib/common.sh" 
 
 export VENV_DIR="$APP_DIR/.venv" 
